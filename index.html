@@ -2,16 +2,17 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <!-- Важно: viewport-fit=cover и user-scalable=no для ощущения нативного приложения -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>WORDLE</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@700;800&display=swap');
 
         :root {
             --bg-color: #ffffff;
-            --tile-absent: #94a3b8;   /* Серо-голубой */
-            --tile-correct: #6aaa64;  /* Зеленый */
-            --tile-present: #c9b458;  /* Желтый */
+            --tile-absent: #94a3b8;
+            --tile-correct: #6aaa64;
+            --tile-present: #c9b458;
             
             --key-bg: #d3d6da;
             --key-text: #000000;
@@ -19,6 +20,13 @@
             --tile-border: #d3d6da;
             --tile-filled-border: #878a8c;
             --tile-text-filled: #000000;
+
+            /* Высота хедера */
+            --header-height: 50px;
+        }
+
+        * {
+            box-sizing: border-box;
         }
 
         body {
@@ -28,7 +36,9 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            height: 100vh;
+            /* 100dvh учитывает плавающую адресную строку на мобильных */
+            height: 100dvh; 
+            width: 100%;
             overflow: hidden;
             touch-action: manipulation;
         }
@@ -39,27 +49,26 @@
             align-items: center;
             justify-content: center;
             width: 100%;
-            height: 50px;
+            height: var(--header-height);
             border-bottom: 1px solid #eee;
-            margin-bottom: 10px;
             position: relative;
+            flex-shrink: 0; /* Не сжимать хедер */
         }
 
         h1 {
-            font-size: 30px;
+            font-size: clamp(20px, 5vw, 30px); /* Адаптивный шрифт */
             font-weight: 800;
             color: #202020;
             margin: 0;
-            letter-spacing: 2px;
+            letter-spacing: 1px;
         }
 
-        /* Контейнер для кнопок справа */
         .header-controls {
             position: absolute;
-            right: 20px;
+            right: 10px;
             display: flex;
             align-items: center;
-            gap: 10px; /* Отступ между кнопкой рестарта и подсказкой */
+            gap: 8px;
         }
 
         .hint-btn {
@@ -67,14 +76,15 @@
             border: 2px solid var(--tile-present);
             color: var(--tile-present);
             border-radius: 20px;
-            padding: 4px 12px;
+            padding: 4px 10px;
             font-weight: 800;
-            font-size: 13px;
+            font-size: 12px;
             cursor: pointer;
             display: flex;
             align-items: center;
-            gap: 5px;
+            gap: 4px;
             transition: 0.2s;
+            white-space: nowrap;
         }
         .hint-btn:active { transform: scale(0.95); background: var(--tile-present); color: #fff; }
 
@@ -82,37 +92,34 @@
             background: none;
             border: none;
             cursor: pointer;
-            font-size: 24px;
+            font-size: 22px;
             color: var(--tile-absent);
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 0;
+            padding: 5px;
             transition: transform 0.4s ease;
         }
-        .restart-btn:hover {
-            transform: rotate(180deg);
-            color: #333;
-        }
-        .restart-btn:active {
-            transform: rotate(180deg) scale(0.9);
-        }
+        .restart-btn:hover { transform: rotate(180deg); color: #333; }
+        .restart-btn:active { transform: rotate(180deg) scale(0.9); }
 
         /* --- СООБЩЕНИЯ --- */
         #message-container {
             position: absolute;
-            top: 60px;
+            top: 10%;
+            left: 50%;
+            transform: translateX(-50%);
             z-index: 100;
             pointer-events: none;
             display: flex;
             flex-direction: column;
             gap: 5px;
-            width: 100%;
+            width: 90%;
             align-items: center;
         }
 
         .message {
-            background-color: #000;
+            background-color: rgba(0, 0, 0, 0.85);
             color: #fff;
             padding: 10px 20px;
             border-radius: 4px;
@@ -120,6 +127,7 @@
             font-size: 14px;
             opacity: 0;
             transition: opacity 0.3s;
+            text-align: center;
         }
         .message.show { opacity: 1; }
 
@@ -128,19 +136,23 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            flex-grow: 1;
+            flex-grow: 1; /* Занимает всё свободное место */
             width: 100%;
             overflow: hidden;
+            padding: 10px;
         }
 
         #board {
             display: grid;
             grid-template-rows: repeat(6, 1fr);
             grid-gap: 5px;
-            width: 350px;
-            height: 420px;
-            padding: 10px;
-            box-sizing: border-box;
+            /* Адаптивные размеры */
+            width: 100%;
+            max-width: 350px;
+            /* Сохраняем пропорции 5 колонок на 6 строк */
+            aspect-ratio: 5 / 6; 
+            /* Ограничиваем высоту, чтобы не наезжать на клавиатуру */
+            max-height: calc(100dvh - var(--header-height) - 220px); 
         }
 
         .row {
@@ -155,39 +167,26 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 2rem;
+            /* Размер шрифта зависит от размера плитки */
+            font-size: clamp(1.5rem, 4vh, 2rem); 
             font-weight: 800;
             text-transform: uppercase;
             border: 2px solid var(--tile-border);
             color: var(--tile-text-filled);
             background: transparent;
             user-select: none;
-            box-sizing: border-box;
             border-radius: 4px;
         }
 
         .tile[data-state="filled"] {
             border-color: var(--tile-filled-border);
             animation: pop 0.1s;
-			color: #ccc;
+            color: #000; /* Исправлен цвет текста при вводе */
         }
 
-        /* Стили для окрашенных плиток */
-        .tile[data-state="correct"] {
-            background-color: var(--tile-correct) !important;
-            border-color: var(--tile-correct) !important;
-            color: white !important;
-        }
-        .tile[data-state="present"] {
-            background-color: var(--tile-present) !important;
-            border-color: var(--tile-present) !important;
-            color: white !important;
-        }
-        .tile[data-state="absent"] {
-            background-color: var(--tile-absent) !important;
-            border-color: var(--tile-absent) !important;
-            color: white !important;
-        }
+        .tile[data-state="correct"] { background-color: var(--tile-correct) !important; border-color: var(--tile-correct) !important; color: white !important; }
+        .tile[data-state="present"] { background-color: var(--tile-present) !important; border-color: var(--tile-present) !important; color: white !important; }
+        .tile[data-state="absent"] { background-color: var(--tile-absent) !important; border-color: var(--tile-absent) !important; color: white !important; }
 
         .tile.flip { animation: flip 0.6s ease forwards; }
         .row.shake { animation: shake 0.5s; }
@@ -208,15 +207,16 @@
         #keyboard {
             width: 100%;
             max-width: 500px;
-            padding: 0 8px 20px 8px;
-            box-sizing: border-box;
+            padding: 0 8px 10px 8px; /* Нижний отступ меньше */
+            flex-shrink: 0; /* Не сжимать клавиатуру */
         }
 
         .keyboard-row {
             display: flex;
             justify-content: center;
-            margin-bottom: 8px;
-            gap: 6px;
+            margin-bottom: 6px;
+            width: 100%;
+            gap: 4px; /* Стандартный отступ */
         }
 
         .key {
@@ -224,44 +224,81 @@
             font-weight: bold;
             border: 0;
             margin: 0;
-			padding: 0 20px;
-            height: 58px;
+            padding: 0;
+            height: 54px; /* Чуть меньше высота */
             border-radius: 4px;
             cursor: pointer;
             background-color: var(--key-bg);
             color: var(--key-text);
-            flex: 1;
+            
+            /* Flex: 1 позволяет кнопкам растягиваться равномерно */
+            flex: 1; 
+            
             display: flex;
             justify-content: center;
             align-items: center;
             text-transform: uppercase;
-            font-size: 16px;
+            font-size: 14px;
             touch-action: manipulation;
             -webkit-tap-highlight-color: rgba(0,0,0,0);
             transition: background-color 0.1s;
         }
 
-        .key.large { flex: 1.5; font-size: 12px; }
+        .key.large { 
+            flex: 1.5; 
+            font-size: 12px; 
+        }
 
         .key[data-state="correct"] { background-color: var(--tile-correct); color: white; }
         .key[data-state="present"] { background-color: var(--tile-present); color: white; }
         .key[data-state="absent"] { background-color: var(--tile-absent); color: white; }
+
+        /* --- МЕДИА ЗАПРОСЫ ДЛЯ МОБИЛЬНЫХ --- */
+        @media (max-width: 400px) {
+            /* Уменьшаем отступы для узких экранов, чтобы влезло 12 букв */
+            .keyboard-row {
+                gap: 2px;
+                margin-bottom: 4px;
+            }
+            #keyboard {
+                padding: 0 2px 5px 2px;
+            }
+            .key {
+                height: 48px; /* Кнопки ниже */
+                font-size: 12px; /* Шрифт меньше */
+                border-radius: 3px;
+            }
+            .key.large {
+                font-size: 10px;
+            }
+            h1 {
+                font-size: 22px;
+            }
+        }
+
+        /* Для очень коротких экранов (ландшафт на телефоне) */
+        @media (max-height: 600px) {
+            :root { --header-height: 40px; }
+            #board {
+                max-height: calc(100dvh - 200px); /* Больше места под доску */
+            }
+            .key {
+                height: 40px;
+            }
+        }
     </style>
 </head>
 <body>
 
     <header>
-        <h1>WORDLE 5 БУКВ</h1>
+        <h1>WORDLE RU</h1>
         
         <div class="header-controls">
-            <!-- Кнопка рестарта (слева от подсказки) -->
             <button class="restart-btn" onclick="resetGame()" title="Новая игра">
                 ↻
             </button>
-            
-            <!-- Кнопка подсказки -->
             <button class="hint-btn" onclick="useHint()">
-                <span>💡</span> Подсказка
+                <span>💡</span>
             </button>
         </div>
     </header>
