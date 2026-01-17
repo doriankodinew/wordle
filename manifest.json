@@ -1,0 +1,8 @@
+{
+  "name": "Вордли — Wordle на русском",
+  "short_name": "Вордли",
+  "description": "Словесная головоломка на русском языке",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff"
+}
