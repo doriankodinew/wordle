@@ -4,27 +4,36 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 
-<title>СЛОВОДЕЛ — словесная игра на русском</title>
+<title>СЛОВОДЕЛ — словесная игра на русском | Играть онлайн бесплатно</title>
 
 <meta name="description" content="СЛОВОДЕЛ — словесная игра на русском языке. Угадай слово из 5 букв за 6 попыток.">
-<meta name="theme-color" content="#1e1140">
+<meta name="theme-color" content="#0a0714">
 
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@700;800;900&family=Manrope:wght@500;600;700;800&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Manrope:wght@500;600;700;800&display=swap');
 
     :root {
-        /* --- СВЕТЛАЯ ТЕМА (Aurora Glass · Light) --- */
-        --bg-1: #ffd9ec;
-        --bg-2: #cdeeff;
-        --bg-3: #fff2c9;
-        --bg-color: #f3edff;
-        --text-main: #241a3d;
-        --text-dim: rgba(36, 26, 61, 0.62);
+        /* --- ГОЛОГРАФИЧЕСКАЯ ПАЛИТРА (общая для обеих тем) --- */
+        --holo-a: #6ee7f9;
+        --holo-b: #c084fc;
+        --holo-c: #f472b6;
+        --holo-d: #fde68a;
+        --holo-e: #86efac;
 
-        --glass-bg: rgba(255, 255, 255, 0.5);
-        --glass-bg-strong: rgba(255, 255, 255, 0.68);
+        /* --- СВЕТЛАЯ ТЕМА (Crystal Dawn) --- */
+        --bg-1: #e3d6ff;
+        --bg-2: #cdeeff;
+        --bg-3: #ffe6c9;
+        --bg-color: #eee7ff;
+        --text-main: #241a3d;
+        --text-dim: rgba(36, 26, 61, 0.6);
+
+        --glass-bg: rgba(255, 255, 255, 0.42);
+        --glass-bg-strong: rgba(255, 255, 255, 0.65);
         --glass-border: rgba(255, 255, 255, 0.85);
         --glass-shadow: 0 10px 40px rgba(96, 60, 160, 0.18);
+        --shard-opacity: 0.16;
+        --shine-op: 0.55;
 
         --accent: #8b5cf6;
         --accent-2: #06b6d4;
@@ -32,61 +41,65 @@
         --modal-bg: rgba(255, 255, 255, 0.72);
         --modal-overlay: rgba(60, 40, 90, 0.28);
 
-        --tile-absent: rgba(36, 26, 61, 0.14);
+        --tile-bg: rgba(150, 120, 220, 0.28);
+        --tile-absent: rgba(120, 110, 150, 0.22);
         --tile-absent-border: rgba(36, 26, 61, 0.16);
-        --tile-correct-a: #3fd48b;
-        --tile-correct-b: #0ea56f;
-        --tile-present-a: #ffc24b;
-        --tile-present-b: #e08e00;
+        --tile-correct-a: #7ce6ab;
+        --tile-correct-b: #2fb673;
+        --tile-present-a: #ffd873;
+        --tile-present-b: #e0a417;
 
-        --key-bg: rgba(255, 255, 255, 0.55);
+        --key-bg: rgba(150, 120, 220, 0.24);
         --key-text: #241a3d;
 
-        --tile-border: rgba(36, 26, 61, 0.18);
+        --tile-border: rgba(139, 92, 246, 0.35);
         --tile-filled-border: var(--accent);
         --tile-text-filled: #241a3d;
 
         --header-border: rgba(255, 255, 255, 0.6);
         --header-height: 56px;
-        --btn-hover: rgba(139, 92, 246, 0.14);
+        --btn-hover: rgba(139, 92, 246, 0.16);
     }
 
-    /* --- ТЁМНАЯ ТЕМА (Aurora Glass · Dark) --- */
+    /* --- ТЁМНАЯ ТЕМА (Crystal Night) --- */
     body.dark-mode {
-        --bg-1: #22124a;
-        --bg-2: #0c2246;
-        --bg-3: #3a0f34;
-        --bg-color: #0b0817;
+        --bg-1: #2a1258;
+        --bg-2: #0c1a42;
+        --bg-3: #3a0f3a;
+        --bg-color: #0a0714;
         --text-main: #f5f1ff;
-        --text-dim: rgba(245, 241, 255, 0.6);
+        --text-dim: rgba(245, 241, 255, 0.62);
 
-        --glass-bg: rgba(255, 255, 255, 0.055);
-        --glass-bg-strong: rgba(255, 255, 255, 0.09);
-        --glass-border: rgba(255, 255, 255, 0.14);
+        --glass-bg: rgba(255, 255, 255, 0.07);
+        --glass-bg-strong: rgba(255, 255, 255, 0.12);
+        --glass-border: rgba(255, 255, 255, 0.22);
         --glass-shadow: 0 10px 45px rgba(0, 0, 0, 0.55);
+        --shard-opacity: 0.22;
+        --shine-op: 0.28;
 
         --accent: #b18bff;
         --accent-2: #33e5ff;
 
-        --modal-bg: rgba(20, 14, 36, 0.6);
+        --modal-bg: rgba(20, 14, 36, 0.62);
         --modal-overlay: rgba(4, 2, 12, 0.62);
 
-        --tile-absent: rgba(255, 255, 255, 0.055);
-        --tile-absent-border: rgba(255, 255, 255, 0.1);
-        --tile-correct-a: #35e6a0;
+        --tile-bg: rgba(140, 110, 210, 0.22);
+        --tile-absent: rgba(255, 255, 255, 0.06);
+        --tile-absent-border: rgba(255, 255, 255, 0.12);
+        --tile-correct-a: #4ee6a5;
         --tile-correct-b: #0a9463;
         --tile-present-a: #ffcf5c;
-        --tile-present-b: #d9930a;
+        --tile-present-b: #c9840a;
 
         --key-bg: rgba(255, 255, 255, 0.08);
         --key-text: #f5f1ff;
 
-        --tile-border: rgba(255, 255, 255, 0.16);
+        --tile-border: rgba(255, 255, 255, 0.2);
         --tile-filled-border: var(--accent);
         --tile-text-filled: #ffffff;
 
         --header-border: rgba(255, 255, 255, 0.12);
-        --btn-hover: rgba(177, 139, 255, 0.16);
+        --btn-hover: rgba(177, 139, 255, 0.18);
     }
 
     * { box-sizing: border-box; }
@@ -108,11 +121,11 @@
         -webkit-tap-highlight-color: transparent;
     }
 
-    /* --- АВРОРА-ФОН --- */
+    /* --- КОСМИЧЕСКИЙ ФОН --- */
     .aurora {
         position: fixed;
         inset: 0;
-        z-index: -2;
+        z-index: -3;
         overflow: hidden;
         pointer-events: none;
     }
@@ -120,10 +133,10 @@
         position: absolute;
         border-radius: 50%;
         filter: blur(70px);
-        opacity: 0.55;
+        opacity: 0.6;
         will-change: transform;
     }
-    body.dark-mode .aurora span { opacity: 0.42; mix-blend-mode: screen; }
+    body.dark-mode .aurora span { opacity: 0.45; mix-blend-mode: screen; }
 
     .aurora span:nth-child(1) {
         width: 55vmax; height: 55vmax;
@@ -148,50 +161,136 @@
     @keyframes drift2 { 0% { transform: translate(0,0) scale(1); } 100% { transform: translate(-8%, -6%) scale(1.15); } }
     @keyframes drift3 { 0% { transform: translate(-50%,-50%) scale(1); } 100% { transform: translate(-46%,-56%) scale(1.2); } }
 
-    /* Лёгкое зерно для глубины */
-    .grain {
+    /* Радужный луч света по диагонали */
+    .lightbeam {
         position: fixed;
-        inset: 0;
-        z-index: 5;
+        inset: -20%;
+        z-index: -2;
         pointer-events: none;
-        opacity: 0.035;
-        mix-blend-mode: overlay;
-        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+        background: linear-gradient(115deg,
+            transparent 30%,
+            rgba(110, 231, 249, 0.16) 42%,
+            rgba(192, 132, 252, 0.18) 48%,
+            rgba(244, 114, 182, 0.16) 54%,
+            rgba(253, 230, 138, 0.14) 60%,
+            transparent 72%);
+        mix-blend-mode: screen;
+        animation: beamShift 14s ease-in-out infinite alternate;
+    }
+    body:not(.dark-mode) .lightbeam { mix-blend-mode: multiply; opacity: 0.6; }
+    @keyframes beamShift { 0% { transform: translateX(-4%) rotate(0deg); } 100% { transform: translateX(4%) rotate(1.5deg); } }
+
+    /* Кристаллические осколки фона */
+    .shards { position: fixed; inset: 0; z-index: -1; pointer-events: none; overflow: hidden; }
+    .shard {
+        position: absolute;
+        opacity: var(--shard-opacity);
+        clip-path: polygon(50% 0%, 100% 38%, 78% 100%, 22% 100%, 0% 38%);
+        filter: blur(0.5px);
+        animation: shardFloat 12s ease-in-out infinite alternate;
+    }
+    .shard:nth-child(1) { width: 90px; height: 120px; top: 6%; left: -4%; background: linear-gradient(160deg, var(--holo-a), var(--holo-b)); transform: rotate(-18deg); animation-duration: 13s; }
+    .shard:nth-child(2) { width: 60px; height: 80px; top: 68%; left: 88%; background: linear-gradient(160deg, var(--holo-c), var(--holo-d)); transform: rotate(24deg); animation-duration: 16s; }
+    .shard:nth-child(3) { width: 120px; height: 150px; top: 82%; left: -8%; background: linear-gradient(160deg, var(--holo-b), var(--holo-e)); transform: rotate(10deg); animation-duration: 19s; }
+    .shard:nth-child(4) { width: 70px; height: 95px; top: -4%; left: 78%; background: linear-gradient(160deg, var(--holo-d), var(--holo-c)); transform: rotate(-30deg); animation-duration: 15s; }
+    @keyframes shardFloat { 0% { transform: translateY(0) rotate(var(--r, 0deg)); } 100% { transform: translateY(-14px) rotate(calc(var(--r, 0deg) + 4deg)); } }
+
+    /* Мерцающие искры */
+    .sparkles { position: fixed; inset: 0; z-index: -1; pointer-events: none; }
+    .sparkles span {
+        position: absolute;
+        width: 4px; height: 4px;
+        background: #fff;
+        border-radius: 50%;
+        opacity: 0;
+        box-shadow: 0 0 6px 1px rgba(255,255,255,0.8);
+        animation: twinkle 3.6s ease-in-out infinite;
+    }
+    .sparkles span:nth-child(1) { top: 14%; left: 12%; animation-delay: 0s; }
+    .sparkles span:nth-child(2) { top: 22%; left: 82%; animation-delay: 0.7s; }
+    .sparkles span:nth-child(3) { top: 46%; left: 6%; animation-delay: 1.4s; }
+    .sparkles span:nth-child(4) { top: 60%; left: 90%; animation-delay: 2s; }
+    .sparkles span:nth-child(5) { top: 78%; left: 20%; animation-delay: 2.6s; }
+    .sparkles span:nth-child(6) { top: 8%; left: 55%; animation-delay: 1.9s; }
+    @keyframes twinkle { 0%, 100% { opacity: 0; transform: scale(0.6); } 50% { opacity: 1; transform: scale(1.3); } }
+
+    /* --- ГОЛОГРАФИЧЕСКИЙ БЛИК (переиспользуемый) --- */
+    .glass-shine { position: relative; overflow: hidden; }
+    .glass-shine::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        background: linear-gradient(135deg,
+            rgba(255,255,255, calc(var(--shine-op) * 0.9)) 0%,
+            rgba(255,255,255, 0) 26%,
+            rgba(255,255,255, 0) 60%,
+            rgba(255,255,255, calc(var(--shine-op) * 0.4)) 100%);
+        pointer-events: none;
+        z-index: 1;
     }
 
-    /* --- ШАПКА (плавающая стеклянная капсула) --- */
+    /* --- ШАПКА --- */
     header {
         display: flex;
         align-items: center;
         justify-content: center;
         width: calc(100% - 24px);
         max-width: 480px;
-        margin: 12px auto 0;
+        margin: 10px auto 0;
         height: var(--header-height);
-        border-radius: 20px;
-        background: var(--glass-bg);
-        border: 1px solid var(--glass-border);
-        box-shadow: var(--glass-shadow);
-        backdrop-filter: blur(22px) saturate(160%);
-        -webkit-backdrop-filter: blur(22px) saturate(160%);
-        position: relative;
         flex-shrink: 0;
+        position: relative;
         z-index: 20;
-        padding: 0 8px;
     }
 
+    .title-wrap {
+        position: absolute;
+        top: calc(var(--header-height) + 2px);
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100%;
+        text-align: center;
+        z-index: 19;
+        pointer-events: none;
+    }
+
+    .gem-crown {
+        width: 38px;
+        height: 38px;
+        margin-bottom: -6px;
+        filter: drop-shadow(0 4px 10px rgba(139,92,246,0.45));
+        animation: gemSpin 7s ease-in-out infinite;
+    }
+    @keyframes gemSpin { 0%, 100% { transform: rotate(-6deg) translateY(0); } 50% { transform: rotate(6deg) translateY(-4px); } }
+
     h1 {
-        font-family: 'Unbounded', sans-serif;
-        font-size: clamp(18px, 5vw, 22px);
+        font-family: 'Baloo 2', sans-serif;
+        font-size: clamp(30px, 11vw, 44px);
         font-weight: 800;
         margin: 0;
-        letter-spacing: 1.5px;
-        background: linear-gradient(120deg, var(--accent), var(--accent-2));
+        letter-spacing: 2px;
+        line-height: 1;
+        background: linear-gradient(100deg, var(--holo-a), var(--holo-b) 35%, var(--holo-c) 60%, var(--holo-d) 85%);
+        background-size: 220% 220%;
         -webkit-background-clip: text;
         background-clip: text;
         color: transparent;
-        filter: drop-shadow(0 2px 10px rgba(139, 92, 246, 0.25));
+        animation: holoShift 6s ease-in-out infinite;
+        text-shadow: 0 3px 0 rgba(0,0,0,0.18), 0 8px 24px rgba(139,92,246,0.4);
+        filter: drop-shadow(0 0 18px rgba(196,140,255,0.35));
     }
+    @keyframes holoShift { 0%, 100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
+
+    .tagline {
+        margin: 2px 0 0;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        color: var(--text-dim);
+    }
+    .tagline .spark { color: var(--holo-d); }
 
     .header-left {
         position: absolute;
@@ -210,44 +309,45 @@
     }
 
     .icon-btn {
-        background: var(--key-bg);
+        background: var(--glass-bg);
         border: 1px solid var(--glass-border);
         cursor: pointer;
         color: var(--text-main);
         padding: 0;
-        width: 38px;
-        height: 38px;
-        border-radius: 12px;
+        width: 40px;
+        height: 40px;
+        border-radius: 13px;
         transition: transform 0.25s cubic-bezier(.34,1.56,.64,1), box-shadow 0.25s, background-color 0.25s, color 0.25s;
         display: flex;
         align-items: center;
         justify-content: center;
+        box-shadow: var(--glass-shadow), inset 0 1px 0 rgba(255,255,255,0.5);
+        backdrop-filter: blur(14px) saturate(160%);
+        -webkit-backdrop-filter: blur(14px) saturate(160%);
     }
-    .icon-btn svg { width: 19px; height: 19px; stroke: currentColor; fill: none; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+    .icon-btn svg { width: 19px; height: 19px; stroke: currentColor; fill: none; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; position: relative; z-index: 2; }
     .icon-btn:hover { box-shadow: 0 0 0 4px var(--btn-hover), 0 4px 14px rgba(0,0,0,0.12); transform: translateY(-2px); color: var(--accent); }
     .icon-btn:active { transform: scale(0.9); }
 
     .hint-btn {
-        background: linear-gradient(145deg, rgba(255,194,75,0.28), rgba(255,194,75,0.08));
-        color: #e08e00;
-        border: 1px solid rgba(255, 194, 75, 0.5);
+        background: linear-gradient(145deg, rgba(255,216,115,0.32), rgba(255,194,75,0.1));
+        color: #b3790a;
+        border: 1px solid rgba(255, 194, 75, 0.55);
         padding: 0;
-        width: 38px;
-        height: 38px;
-        border-radius: 12px;
+        width: 40px;
+        height: 40px;
+        border-radius: 13px;
         cursor: pointer;
         display: flex;
         align-items: center;
         justify-content: center;
         transition: transform 0.25s, box-shadow 0.25s;
+        box-shadow: var(--glass-shadow), inset 0 1px 0 rgba(255,255,255,0.5);
     }
     body.dark-mode .hint-btn { color: #ffcf5c; }
-    .hint-btn svg { width: 19px; height: 19px; stroke: currentColor; fill: none; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+    .hint-btn svg { width: 19px; height: 19px; stroke: currentColor; fill: none; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; position: relative; z-index: 2; }
     .hint-btn:hover { box-shadow: 0 0 0 5px rgba(255,194,75,0.18), 0 4px 14px rgba(255,194,75,0.25); transform: translateY(-2px) scale(1.04); }
     .hint-btn:active { transform: scale(0.9); }
-
-    .restart-btn:hover svg { transform: rotate(220deg); }
-    .restart-btn svg { transition: transform 0.5s cubic-bezier(.34,1.56,.64,1); }
 
     /* --- МОДАЛЬНЫЕ ОКНА (стекло) --- */
     .modal-overlay {
@@ -279,7 +379,7 @@
         max-height: 80vh;
         display: flex;
         flex-direction: column;
-        box-shadow: var(--glass-shadow);
+        box-shadow: var(--glass-shadow), 0 0 0 1px rgba(255,255,255,0.15) inset;
         position: relative;
         animation: modalIn 0.35s cubic-bezier(.2,.9,.3,1.2);
     }
@@ -295,8 +395,8 @@
     }
     .modal-header h2 {
         margin: 0;
-        font-size: 1.15rem;
-        font-family: 'Unbounded', sans-serif;
+        font-size: 1.2rem;
+        font-family: 'Baloo 2', sans-serif;
         font-weight: 700;
         letter-spacing: 0.3px;
     }
@@ -338,6 +438,7 @@
         border: 1px solid var(--glass-border);
         font-size: 1.05rem;
         font-weight: 700;
+        font-family: 'Baloo 2', sans-serif;
         text-transform: uppercase;
         letter-spacing: 0.5px;
         display: flex;
@@ -348,14 +449,14 @@
     #guessed-words-list li:hover { transform: translateX(2px); }
     .word-count {
         font-weight: 800;
-        font-family: 'Unbounded', sans-serif;
+        font-family: 'Baloo 2', sans-serif;
         font-size: 0.75rem;
         color: var(--accent-2);
     }
 
     /* Кнопки в модалке */
     .danger-btn {
-        background: linear-gradient(135deg, #ff6b6b, #e0483f);
+        background: linear-gradient(135deg, #ff8a8a, #e0483f);
         color: white;
         border: none;
         padding: 12px 15px;
@@ -373,10 +474,31 @@
 
     .empty-msg { text-align: center; color: var(--text-dim); margin-top: 20px; }
 
+    /* --- ЛЕГЕНДА ЦВЕТОВ --- */
+    #legend {
+        display: flex;
+        justify-content: center;
+        gap: 14px;
+        flex-wrap: wrap;
+        width: 100%;
+        max-width: 350px;
+        margin: 0 auto 6px;
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.4px;
+        text-transform: uppercase;
+        color: var(--text-dim);
+    }
+    #legend span { display: inline-flex; align-items: center; gap: 5px; white-space: nowrap; }
+    .dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; box-shadow: 0 0 6px currentColor; }
+    .dot.correct { background: linear-gradient(150deg, var(--tile-correct-a), var(--tile-correct-b)); }
+    .dot.present { background: linear-gradient(150deg, var(--tile-present-a), var(--tile-present-b)); }
+    .dot.absent { background: var(--tile-absent); border: 1px solid var(--tile-absent-border); }
+
     /* --- СООБЩЕНИЯ --- */
     #message-container {
         position: absolute;
-        top: 12%;
+        top: 11%;
         left: 50%;
         transform: translateX(-50%);
         z-index: 100;
@@ -384,7 +506,8 @@
         display: flex;
         flex-direction: column;
         gap: 6px;
-        width: 90%;
+        width: 92%;
+        max-width: 380px;
         align-items: center;
     }
 
@@ -394,8 +517,8 @@
         -webkit-backdrop-filter: blur(18px) saturate(160%);
         border: 1px solid var(--glass-border);
         color: var(--text-main);
-        padding: 10px 22px;
-        border-radius: 12px;
+        padding: 10px 20px;
+        border-radius: 14px;
         font-weight: 700;
         font-size: 14px;
         opacity: 0;
@@ -403,8 +526,10 @@
         transition: opacity 0.3s, transform 0.3s;
         text-align: center;
         box-shadow: var(--glass-shadow);
+        width: 100%;
     }
     .message.show { opacity: 1; transform: translateY(0); }
+    .message::before { content: '✦ '; color: var(--holo-d); }
 
     /* --- ДОСКА --- */
     #board-container {
@@ -414,7 +539,7 @@
         flex-grow: 1;
         width: 100%;
         overflow: hidden;
-        padding: 10px;
+        padding: 6px 10px;
     }
 
     #board {
@@ -424,11 +549,11 @@
         width: 100%;
         max-width: 350px;
         aspect-ratio: 5 / 6;
-        max-height: calc(100dvh - var(--header-height) - 230px);
+        max-height: calc(100dvh - var(--header-height) - 280px);
         background: var(--glass-bg);
         border: 1px solid var(--glass-border);
         border-radius: 18px;
-        box-shadow: var(--glass-shadow);
+        box-shadow: var(--glass-shadow), 0 0 22px rgba(110, 231, 249, 0.18), 0 0 0 1px rgba(255,255,255,0.1) inset;
         backdrop-filter: blur(18px) saturate(150%);
         -webkit-backdrop-filter: blur(18px) saturate(150%);
         padding: 14px;
@@ -439,8 +564,8 @@
         animation: winPulse 0.9s ease-in-out 2;
     }
     @keyframes winPulse {
-        0%, 100% { box-shadow: var(--glass-shadow); }
-        50% { box-shadow: 0 0 0 6px rgba(63, 212, 139, 0.25), 0 10px 40px rgba(63, 212, 139, 0.35); }
+        0%, 100% { box-shadow: var(--glass-shadow), 0 0 22px rgba(110, 231, 249, 0.18); }
+        50% { box-shadow: 0 0 0 6px rgba(78, 230, 165, 0.3), 0 10px 40px rgba(78, 230, 165, 0.4); }
     }
 
     .row {
@@ -456,22 +581,31 @@
         justify-content: center;
         align-items: center;
         font-size: clamp(1.5rem, 4vh, 2rem);
-        font-weight: 800;
-        font-family: 'Unbounded', sans-serif;
+        font-weight: 700;
+        font-family: 'Baloo 2', sans-serif;
         text-transform: uppercase;
-        background: rgba(255,255,255,0.02);
+        background: var(--tile-bg);
         border: 2px solid var(--tile-border);
         color: var(--tile-text-filled);
-        border-radius: 8px;
+        border-radius: 10px;
         user-select: none;
         transition: background-color 0.2s, border-color 0.2s, box-shadow 0.3s, transform 0.15s;
+        position: relative;
+        overflow: hidden;
+        box-shadow: inset 0 1px 0 rgba(255,255,255,0.35), inset 0 -6px 10px rgba(0,0,0,0.08);
+    }
+    .tile::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(135deg, rgba(255,255,255,0.45) 0%, rgba(255,255,255,0) 30%, rgba(255,255,255,0) 65%, rgba(255,255,255,0.12) 100%);
+        pointer-events: none;
     }
 
     .tile[data-state="filled"] {
         border-color: var(--tile-filled-border);
-        background: var(--btn-hover);
         animation: pop 0.12s;
-        box-shadow: 0 0 0 3px var(--btn-hover);
+        box-shadow: 0 0 0 3px var(--btn-hover), inset 0 1px 0 rgba(255,255,255,0.4);
     }
 
     .tile[data-state="correct"] {
@@ -512,8 +646,8 @@
     #keyboard {
         width: calc(100% - 12px);
         max-width: 500px;
-        padding: 12px 8px;
-        margin-bottom: 8px;
+        padding: 10px 8px;
+        margin-bottom: 6px;
         flex-shrink: 0;
         background: var(--glass-bg);
         border: 1px solid var(--glass-border);
@@ -536,7 +670,7 @@
         font-family: 'Manrope', sans-serif;
         font-weight: 700;
         border: 1px solid var(--glass-border);
-        height: 52px;
+        height: 48px;
         border-radius: 8px;
         cursor: pointer;
         background-color: var(--key-bg);
@@ -550,10 +684,20 @@
         touch-action: manipulation;
         -webkit-tap-highlight-color: transparent;
         transition: transform 0.1s, box-shadow 0.2s, background-color 0.25s, border-color 0.25s;
+        position: relative;
+        overflow: hidden;
+        box-shadow: inset 0 1px 0 rgba(255,255,255,0.3);
+    }
+    .key::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(135deg, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 40%, rgba(255,255,255,0) 70%, rgba(255,255,255,0.08) 100%);
+        pointer-events: none;
     }
     .key:hover { box-shadow: 0 0 0 3px var(--btn-hover); }
     .key:active { transform: scale(0.92); }
-    .key svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+    .key svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; position: relative; z-index: 2; }
 
     .key.large { flex: 1.5; font-size: 11px; letter-spacing: 0.5px; }
 
@@ -563,16 +707,64 @@
 
     button { outline: none; font-family: inherit; }
 
+    /* --- КНОПКА "НОВАЯ ИГРА" --- */
+    .new-game-btn {
+        width: calc(100% - 24px);
+        max-width: 480px;
+        margin: 0 auto 10px;
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        height: 46px;
+        border-radius: 16px;
+        border: 1px solid var(--glass-border);
+        background: linear-gradient(100deg, rgba(110,231,249,0.25), rgba(192,132,252,0.25), rgba(244,114,182,0.25));
+        color: var(--text-main);
+        font-family: 'Baloo 2', sans-serif;
+        font-weight: 700;
+        font-size: 14px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        cursor: pointer;
+        box-shadow: var(--glass-shadow), inset 0 1px 0 rgba(255,255,255,0.4);
+        backdrop-filter: blur(16px) saturate(160%);
+        -webkit-backdrop-filter: blur(16px) saturate(160%);
+        position: relative;
+        overflow: hidden;
+        transition: transform 0.15s, box-shadow 0.2s;
+    }
+    .new-game-btn::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(135deg, rgba(255,255,255,0.35) 0%, rgba(255,255,255,0) 35%, rgba(255,255,255,0) 65%, rgba(255,255,255,0.15) 100%);
+        pointer-events: none;
+    }
+    .new-game-btn:hover { transform: translateY(-2px); box-shadow: 0 0 0 4px var(--btn-hover), var(--glass-shadow); }
+    .new-game-btn:active { transform: scale(0.97); }
+    .new-game-btn .gem-icon { width: 20px; height: 20px; position: relative; z-index: 2; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.25)); }
+
+    .gem-icon { display: inline-block; }
+
     @media (max-width: 400px) {
         .keyboard-row { gap: 3px; margin-bottom: 5px; }
-        #keyboard { padding: 10px 4px; }
-        .key { height: 48px; font-size: 13px; }
+        #keyboard { padding: 8px 4px; }
+        .key { height: 44px; font-size: 13px; }
+        #legend { font-size: 9px; gap: 10px; }
     }
-    @media (max-height: 600px) {
+    @media (max-height: 640px) {
         :root { --header-height: 46px; }
-        #board { max-height: calc(100dvh - 210px); padding: 8px; }
-        .key { height: 40px; }
-        #keyboard { padding: 8px 6px; }
+        .title-wrap { top: calc(var(--header-height) - 4px); }
+        h1 { font-size: clamp(22px, 8vw, 30px); }
+        .gem-crown { width: 26px; height: 26px; }
+        .tagline { display: none; }
+        #legend { display: none; }
+        #board { max-height: calc(100dvh - 190px); padding: 8px; }
+        .key { height: 38px; }
+        #keyboard { padding: 6px 6px; }
+        .new-game-btn { height: 38px; font-size: 12px; }
     }
 
     .modal-actions {
@@ -600,30 +792,58 @@
 </head>
 <body>
 
+    <!-- SVG-символ кристалла (переиспользуется через <use>) -->
+    <svg width="0" height="0" style="position:absolute;" aria-hidden="true">
+        <defs>
+            <symbol id="gem" viewBox="0 0 100 100">
+                <defs>
+                    <linearGradient id="gemTop" x1="0" y1="0" x2="1" y2="1">
+                        <stop offset="0%" stop-color="#a5f3fc"/>
+                        <stop offset="100%" stop-color="#f0abfc"/>
+                    </linearGradient>
+                    <linearGradient id="gemLeft" x1="0" y1="0" x2="1" y2="1">
+                        <stop offset="0%" stop-color="#c084fc"/>
+                        <stop offset="100%" stop-color="#818cf8"/>
+                    </linearGradient>
+                    <linearGradient id="gemRight" x1="0" y1="0" x2="1" y2="1">
+                        <stop offset="0%" stop-color="#f9a8d4"/>
+                        <stop offset="100%" stop-color="#fde68a"/>
+                    </linearGradient>
+                </defs>
+                <polygon points="50,4 82,36 50,48 18,36" fill="url(#gemTop)" stroke="rgba(255,255,255,0.6)" stroke-width="1.5"/>
+                <polygon points="18,36 50,48 50,96 8,58" fill="url(#gemLeft)" stroke="rgba(255,255,255,0.4)" stroke-width="1.5"/>
+                <polygon points="82,36 50,48 50,96 92,58" fill="url(#gemRight)" stroke="rgba(255,255,255,0.4)" stroke-width="1.5"/>
+            </symbol>
+        </defs>
+    </svg>
+
     <div class="aurora"><span></span><span></span><span></span></div>
-    <div class="grain"></div>
+    <div class="lightbeam"></div>
+    <div class="shards"><span class="shard"></span><span class="shard"></span><span class="shard"></span><span class="shard"></span></div>
+    <div class="sparkles"><span></span><span></span><span></span><span></span><span></span><span></span></div>
 
     <header>
         <div class="header-left">
-            <button class="icon-btn" onclick="openStats()" title="Статистика">
+            <button class="icon-btn glass-shine" onclick="openStats()" title="Статистика">
                 <svg viewBox="0 0 24 24"><path d="M7 4h10v5a5 5 0 0 1-10 0V4Z"/><path d="M7 5H5a2 2 0 0 0 0 4h2"/><path d="M17 5h2a2 2 0 0 1 0 4h-2"/><path d="M12 14v3"/><path d="M8 21h8"/><path d="M12 17v4"/></svg>
-            </button>
-            <button class="icon-btn" onclick="openSettings()" title="Настройки">
-                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="2.7"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.6a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z"/></svg>
             </button>
         </div>
 
-        <h1>СЛОВОДЕЛ</h1>
+        <div class="title-wrap">
+            <svg class="gem-crown"><use href="#gem"></use></svg>
+            <h1>СЛОВОДЕЛ</h1>
+            <p class="tagline"><span class="spark">✦</span> угадай слово <span class="spark">✦</span></p>
+        </div>
 
         <div class="header-right">
-            <button class="hint-btn" onclick="useHint()" title="Подсказка">
+            <button class="hint-btn glass-shine" onclick="useHint()" title="Подсказка">
                 <svg viewBox="0 0 24 24"><path d="M9 18h6"/><path d="M10 21.5h4"/><path d="M12 2a7 7 0 0 0-4 12.7c.6.5.9 1.1.9 1.8v.5h6.2v-.5c0-.7.3-1.3.9-1.8A7 7 0 0 0 12 2Z"/></svg>
             </button>
-            <button class="icon-btn restart-btn" onclick="startNewGame()" title="Новая игра">
-                <svg viewBox="0 0 24 24"><path d="M3.5 12a8.5 8.5 0 0 1 14.6-5.9L20 8"/><path d="M20 3.5V8h-4.5"/><path d="M20.5 12A8.5 8.5 0 0 1 5.9 17.9L4 16"/><path d="M4 20.5V16h4.5"/></svg>
-            </button>
-            <button class="icon-btn theme-btn" onclick="toggleTheme()" title="Сменить тему">
+            <button class="icon-btn theme-btn glass-shine" onclick="toggleTheme()" title="Сменить тему">
                 <span id="theme-icon"></span>
+            </button>
+            <button class="icon-btn glass-shine" onclick="openSettings()" title="Настройки">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="2.7"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.6a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z"/></svg>
             </button>
         </div>
     </header>
@@ -683,11 +903,22 @@
 
     <div id="message-container"></div>
 
+    <div id="legend">
+        <span><i class="dot correct"></i>буква на месте</span>
+        <span><i class="dot present"></i>есть в слове</span>
+        <span><i class="dot absent"></i>нет в слове</span>
+    </div>
+
     <div id="board-container">
         <div id="board"></div>
     </div>
 
     <div id="keyboard"></div>
+
+    <button class="new-game-btn glass-shine" onclick="startNewGame()">
+        <svg class="gem-icon"><use href="#gem"></use></svg>
+        Новая игра
+    </button>
 
 <script>
         // --- КОНСТАНТЫ И НАСТРОЙКИ ---
@@ -700,11 +931,12 @@
         ];
 
         // --- ИКОНКИ (SVG-строки для динамических элементов) ---
-        const ICON_SUN = '<svg viewBox="0 0 24 24" style="stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;width:18px;height:18px;"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></svg>';
-        const ICON_MOON = '<svg viewBox="0 0 24 24" style="stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;width:18px;height:18px;"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5Z"/></svg>';
+        const ICON_SUN = '<svg viewBox="0 0 24 24" style="stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;width:19px;height:19px;position:relative;z-index:2;"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></svg>';
+        const ICON_MOON = '<svg viewBox="0 0 24 24" style="stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;width:19px;height:19px;position:relative;z-index:2;"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5Z"/></svg>';
         const ICON_TROPHY = '<svg viewBox="0 0 24 24" style="stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;width:16px;height:16px;"><path d="M7 4h10v5a5 5 0 0 1-10 0V4Z"/><path d="M7 5H5a2 2 0 0 0 0 4h2"/><path d="M17 5h2a2 2 0 0 1 0 4h-2"/><path d="M12 14v3"/><path d="M8 21h8"/><path d="M12 17v4"/></svg>';
         const ICON_BULB = '<svg viewBox="0 0 24 24" style="stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;width:16px;height:16px;"><path d="M9 18h6"/><path d="M10 21.5h4"/><path d="M12 2a7 7 0 0 0-4 12.7c.6.5.9 1.1.9 1.8v.5h6.2v-.5c0-.7.3-1.3.9-1.8A7 7 0 0 0 12 2Z"/></svg>';
-        const ICON_BACKSPACE = '<svg viewBox="0 0 24 24" style="stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;width:18px;height:18px;"><path d="M21 7v10a1 1 0 0 1-1 1H8l-6-6 6-6h12a1 1 0 0 1 1 1Z"/><path d="M11 10l4 4m0-4-4 4"/></svg>';
+        const ICON_BACKSPACE = '<svg viewBox="0 0 24 24" style="stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;width:18px;height:18px;position:relative;z-index:2;"><path d="M21 7v10a1 1 0 0 1-1 1H8l-6-6 6-6h12a1 1 0 0 1 1 1Z"/><path d="M11 10l4 4m0-4-4 4"/></svg>';
+        const ICON_ENTER = '<svg viewBox="0 0 24 24" style="stroke:currentColor;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;width:18px;height:18px;position:relative;z-index:2;"><path d="M20 5v6a2 2 0 0 1-2 2H5"/><path d="M9 9 5 13l4 4"/></svg>';
 
         // --- ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ ---
         let allWordsSet = new Set();
@@ -919,7 +1151,7 @@
 
                 if (index === 2) {
                     const enterKey = createKey("Enter", "large");
-                    enterKey.textContent = "ВВОД";
+                    enterKey.innerHTML = ICON_ENTER;
                     enterKey.onclick = submitGuess;
                     rowDiv.appendChild(enterKey);
                 }
