@@ -168,7 +168,7 @@
         max-width: 480px;
         margin: 12px auto 0;
         height: var(--header-height);
-        border-radius: 999px;
+        border-radius: 20px;
         background: var(--glass-bg);
         border: 1px solid var(--glass-border);
         box-shadow: var(--glass-shadow);
@@ -217,14 +217,14 @@
         padding: 0;
         width: 38px;
         height: 38px;
-        border-radius: 50%;
-        transition: transform 0.25s cubic-bezier(.34,1.56,.64,1), box-shadow 0.25s, background-color 0.25s;
+        border-radius: 12px;
+        transition: transform 0.25s cubic-bezier(.34,1.56,.64,1), box-shadow 0.25s, background-color 0.25s, color 0.25s;
         display: flex;
         align-items: center;
         justify-content: center;
     }
-    .icon-btn svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
-    .icon-btn:hover { box-shadow: 0 0 0 4px var(--btn-hover), 0 4px 14px rgba(0,0,0,0.12); transform: translateY(-2px); }
+    .icon-btn svg { width: 19px; height: 19px; stroke: currentColor; fill: none; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+    .icon-btn:hover { box-shadow: 0 0 0 4px var(--btn-hover), 0 4px 14px rgba(0,0,0,0.12); transform: translateY(-2px); color: var(--accent); }
     .icon-btn:active { transform: scale(0.9); }
 
     .hint-btn {
@@ -234,7 +234,7 @@
         padding: 0;
         width: 38px;
         height: 38px;
-        border-radius: 50%;
+        border-radius: 12px;
         cursor: pointer;
         display: flex;
         align-items: center;
@@ -242,7 +242,7 @@
         transition: transform 0.25s, box-shadow 0.25s;
     }
     body.dark-mode .hint-btn { color: #ffcf5c; }
-    .hint-btn svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+    .hint-btn svg { width: 19px; height: 19px; stroke: currentColor; fill: none; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
     .hint-btn:hover { box-shadow: 0 0 0 5px rgba(255,194,75,0.18), 0 4px 14px rgba(255,194,75,0.25); transform: translateY(-2px) scale(1.04); }
     .hint-btn:active { transform: scale(0.9); }
 
@@ -272,7 +272,7 @@
         backdrop-filter: blur(30px) saturate(170%);
         -webkit-backdrop-filter: blur(30px) saturate(170%);
         border: 1px solid var(--glass-border);
-        border-radius: 26px;
+        border-radius: 18px;
         padding: 22px;
         width: 90%;
         max-width: 400px;
@@ -306,17 +306,17 @@
         border: 1px solid var(--glass-border);
         width: 32px;
         height: 32px;
-        border-radius: 50%;
+        border-radius: 10px;
         color: var(--text-main);
         cursor: pointer;
         line-height: 1;
         display: flex;
         align-items: center;
         justify-content: center;
-        transition: transform 0.2s, background-color 0.2s;
+        transition: transform 0.2s, background-color 0.2s, color 0.2s;
     }
-    .close-modal svg { width: 14px; height: 14px; stroke: currentColor; stroke-width: 2; stroke-linecap: round; }
-    .close-modal:hover { transform: rotate(90deg); background: var(--btn-hover); }
+    .close-modal svg { width: 15px; height: 15px; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; }
+    .close-modal:hover { transform: rotate(90deg); background: var(--btn-hover); color: var(--accent); }
 
     .modal-body {
         overflow-y: auto;
@@ -333,7 +333,7 @@
     #guessed-words-list li {
         padding: 10px 12px;
         margin-bottom: 6px;
-        border-radius: 14px;
+        border-radius: 10px;
         background: var(--glass-bg);
         border: 1px solid var(--glass-border);
         font-size: 1.05rem;
@@ -359,7 +359,7 @@
         color: white;
         border: none;
         padding: 12px 15px;
-        border-radius: 14px;
+        border-radius: 10px;
         font-weight: 800;
         font-family: 'Manrope', sans-serif;
         cursor: pointer;
@@ -395,7 +395,7 @@
         border: 1px solid var(--glass-border);
         color: var(--text-main);
         padding: 10px 22px;
-        border-radius: 999px;
+        border-radius: 12px;
         font-weight: 700;
         font-size: 14px;
         opacity: 0;
@@ -427,7 +427,7 @@
         max-height: calc(100dvh - var(--header-height) - 230px);
         background: var(--glass-bg);
         border: 1px solid var(--glass-border);
-        border-radius: 26px;
+        border-radius: 18px;
         box-shadow: var(--glass-shadow);
         backdrop-filter: blur(18px) saturate(150%);
         -webkit-backdrop-filter: blur(18px) saturate(150%);
@@ -462,7 +462,7 @@
         background: rgba(255,255,255,0.02);
         border: 2px solid var(--tile-border);
         color: var(--tile-text-filled);
-        border-radius: 12px;
+        border-radius: 8px;
         user-select: none;
         transition: background-color 0.2s, border-color 0.2s, box-shadow 0.3s, transform 0.15s;
     }
@@ -517,7 +517,7 @@
         flex-shrink: 0;
         background: var(--glass-bg);
         border: 1px solid var(--glass-border);
-        border-radius: 24px;
+        border-radius: 18px;
         box-shadow: var(--glass-shadow);
         backdrop-filter: blur(18px) saturate(150%);
         -webkit-backdrop-filter: blur(18px) saturate(150%);
@@ -537,7 +537,7 @@
         font-weight: 700;
         border: 1px solid var(--glass-border);
         height: 52px;
-        border-radius: 10px;
+        border-radius: 8px;
         cursor: pointer;
         background-color: var(--key-bg);
         color: var(--key-text);
@@ -586,7 +586,7 @@
         color: var(--text-main);
         border: 1px solid var(--glass-border);
         padding: 12px 15px;
-        border-radius: 14px;
+        border-radius: 10px;
         font-weight: 800;
         cursor: pointer;
         width: 100%;
@@ -606,10 +606,10 @@
     <header>
         <div class="header-left">
             <button class="icon-btn" onclick="openStats()" title="Статистика">
-                <svg viewBox="0 0 24 24"><path d="M8 4h8v3a4 4 0 0 1-4 4 4 4 0 0 1-4-4V4Z"/><path d="M8 5H5a2 2 0 0 0 0 4h1.5"/><path d="M16 5h3a2 2 0 0 1 0 4h-1.5"/><path d="M12 11v3"/><path d="M9 20h6"/><path d="M10 17h4l.5 3h-5l.5-3Z"/></svg>
+                <svg viewBox="0 0 24 24"><path d="M7 4h10v5a5 5 0 0 1-10 0V4Z"/><path d="M7 5H5a2 2 0 0 0 0 4h2"/><path d="M17 5h2a2 2 0 0 1 0 4h-2"/><path d="M12 14v3"/><path d="M8 21h8"/><path d="M12 17v4"/></svg>
             </button>
             <button class="icon-btn" onclick="openSettings()" title="Настройки">
-                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 13.5c.04-.5.04-1 0-1.5l1.9-1.3-1.4-2.4-2.2.7a7.6 7.6 0 0 0-1.3-.8L16 5.6h-2.8l-.4 2.2c-.5.2-.9.5-1.3.8l-2.2-.7L7.9 10l1.9 1.3c-.04.5-.04 1 0 1.5L7.9 14l1.4 2.4 2.2-.7c.4.3.8.6 1.3.8l.4 2.2H16l.4-2.2c.5-.2.9-.5 1.3-.8l2.2.7 1.4-2.4-1.9-1.3Z"/></svg>
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="2.7"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.6a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z"/></svg>
             </button>
         </div>
 
@@ -617,10 +617,10 @@
 
         <div class="header-right">
             <button class="hint-btn" onclick="useHint()" title="Подсказка">
-                <svg viewBox="0 0 24 24"><path d="M9 18h6"/><path d="M10 21h4"/><path d="M12 3a6 6 0 0 0-3.5 10.9c.4.3.6.8.6 1.3V16h5.8v-.8c0-.5.2-1 .6-1.3A6 6 0 0 0 12 3Z"/></svg>
+                <svg viewBox="0 0 24 24"><path d="M9 18h6"/><path d="M10 21.5h4"/><path d="M12 2a7 7 0 0 0-4 12.7c.6.5.9 1.1.9 1.8v.5h6.2v-.5c0-.7.3-1.3.9-1.8A7 7 0 0 0 12 2Z"/></svg>
             </button>
             <button class="icon-btn restart-btn" onclick="startNewGame()" title="Новая игра">
-                <svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 0 1 15.5-6.3L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-15.5 6.3L3 16"/><path d="M3 21v-5h5"/></svg>
+                <svg viewBox="0 0 24 24"><path d="M3.5 12a8.5 8.5 0 0 1 14.6-5.9L20 8"/><path d="M20 3.5V8h-4.5"/><path d="M20.5 12A8.5 8.5 0 0 1 5.9 17.9L4 16"/><path d="M4 20.5V16h4.5"/></svg>
             </button>
             <button class="icon-btn theme-btn" onclick="toggleTheme()" title="Сменить тему">
                 <span id="theme-icon"></span>
@@ -702,8 +702,8 @@
         // --- ИКОНКИ (SVG-строки для динамических элементов) ---
         const ICON_SUN = '<svg viewBox="0 0 24 24" style="stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;width:18px;height:18px;"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></svg>';
         const ICON_MOON = '<svg viewBox="0 0 24 24" style="stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;width:18px;height:18px;"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5Z"/></svg>';
-        const ICON_TROPHY = '<svg viewBox="0 0 24 24" style="stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;width:16px;height:16px;"><path d="M8 4h8v3a4 4 0 0 1-4 4 4 4 0 0 1-4-4V4Z"/><path d="M8 5H5a2 2 0 0 0 0 4h1.5"/><path d="M16 5h3a2 2 0 0 1 0 4h-1.5"/><path d="M12 11v3"/><path d="M9 20h6"/><path d="M10 17h4l.5 3h-5l.5-3Z"/></svg>';
-        const ICON_BULB = '<svg viewBox="0 0 24 24" style="stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;width:16px;height:16px;"><path d="M9 18h6"/><path d="M10 21h4"/><path d="M12 3a6 6 0 0 0-3.5 10.9c.4.3.6.8.6 1.3V16h5.8v-.8c0-.5.2-1 .6-1.3A6 6 0 0 0 12 3Z"/></svg>';
+        const ICON_TROPHY = '<svg viewBox="0 0 24 24" style="stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;width:16px;height:16px;"><path d="M7 4h10v5a5 5 0 0 1-10 0V4Z"/><path d="M7 5H5a2 2 0 0 0 0 4h2"/><path d="M17 5h2a2 2 0 0 1 0 4h-2"/><path d="M12 14v3"/><path d="M8 21h8"/><path d="M12 17v4"/></svg>';
+        const ICON_BULB = '<svg viewBox="0 0 24 24" style="stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;width:16px;height:16px;"><path d="M9 18h6"/><path d="M10 21.5h4"/><path d="M12 2a7 7 0 0 0-4 12.7c.6.5.9 1.1.9 1.8v.5h6.2v-.5c0-.7.3-1.3.9-1.8A7 7 0 0 0 12 2Z"/></svg>';
         const ICON_BACKSPACE = '<svg viewBox="0 0 24 24" style="stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;width:18px;height:18px;"><path d="M21 7v10a1 1 0 0 1-1 1H8l-6-6 6-6h12a1 1 0 0 1 1 1Z"/><path d="M11 10l4 4m0-4-4 4"/></svg>';
 
         // --- ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ ---
