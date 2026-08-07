@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+
+<title>СЛОВОДЕЛ — словесная игра на русском | Играть онлайн бесплатно</title>
+
+<meta name="description" content="СЛОВОДЕЛ — словесная игра на русском языке. Угадай слово из 5 букв за 6 попыток.">
+<meta name="theme-color" content="#4a6cf7">
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@700;800&display=swap');
+
+    :root {
+        /* --- СВЕТЛАЯ ТЕМА --- */
+        --bg-color: #ffffff;
+        --text-main: #202020;
+        --modal-bg: #ffffff;
+        --modal-overlay: rgba(0, 0, 0, 0.5);
+        
+        --tile-absent: #787c7e;
+        --tile-correct: #6aaa64;
+        --tile-present: #c9b458;
+        
+        --key-bg: #d3d6da;
+        --key-text: #000000;
+        
+        --tile-border: #d3d6da;
+        --tile-filled-border: #878a8c;
+        --tile-text-filled: #000000;
+
+        --header-border: #eee;
+        --header-height: 50px;
+        --btn-hover: #f0f0f0;
+    }
+
+    /* --- ТЕМНАЯ ТЕМА --- */
+    body.dark-mode {
+        --bg-color: #121213;
+        --text-main: #ffffff;
+        --modal-bg: #121213;
+        --modal-overlay: rgba(255, 255, 255, 0.1);
+        
+        --tile-absent: #3a3a3c;
+        --tile-correct: #538d4e;
+        --tile-present: #b59f3b;
+        
+        --key-bg: #818384;
+        --key-text: #ffffff;
+        
+        --tile-border: #3a3a3c;
+        --tile-filled-border: #565758;
+        --tile-text-filled: #ffffff;
+
+        --header-border: #3a3a3c;
+        --btn-hover: #2c2c2e;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+        background-color: var(--bg-color);
+        color: var(--text-main);
+        margin: 0;
+        font-family: 'Nunito', sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        height: 100dvh; 
+        width: 100%;
+        overflow: hidden;
+        touch-action: manipulation;
+        transition: background-color 0.3s, color 0.3s;
+    }
+
+    /* --- ШАПКА --- */
+    header {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+		max-width: 500px;
+        margin: 0 auto;
+        height: var(--header-height);
+        border-bottom: 1px solid var(--header-border);
+        position: relative;
+        flex-shrink: 0;
+    }
+
+    h1 {
+        font-size: clamp(20px, 5vw, 24px);
+        font-weight: 800;
+        margin: 0;
+        letter-spacing: 1px;
+    }
+
+    .header-left {
+        position: absolute;
+        left: 10px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .header-right {
+        position: absolute;
+        right: 10px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .icon-btn {
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-size: 20px;
+        color: var(--text-main);
+        padding: 5px;
+        border-radius: 4px;
+        transition: transform 0.2s, background-color 0.2s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .icon-btn:hover { background-color: transparent; }
+    .icon-btn:active { transform: scale(0.9); }
+
+    .hint-btn {
+        background: transparent;
+        color: var(--tile-present);
+        padding: 4px;
+        font-size: 20px;
+        cursor: pointer;
+        border: none;
+    }
+
+    .restart-btn:hover { transform: rotate(180deg); }
+
+    /* --- МОДАЛЬНЫЕ ОКНА --- */
+    .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: var(--modal-overlay);
+        z-index: 200;
+        display: none;
+        justify-content: center;
+        align-items: center;
+        backdrop-filter: blur(2px);
+    }
+    .modal-overlay.open { display: flex; }
+
+    .modal {
+        background-color: var(--modal-bg);
+        border: 1px solid var(--header-border);
+        border-radius: 8px;
+        padding: 20px;
+        width: 90%;
+        max-width: 400px;
+        max-height: 80vh;
+        display: flex;
+        flex-direction: column;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        position: relative;
+    }
+
+    .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+        border-bottom: 1px solid var(--header-border);
+        padding-bottom: 10px;
+    }
+    .modal-header h2 { margin: 0; font-size: 1.2rem; }
+    
+    .close-modal {
+        background: none;
+        border: none;
+        font-size: 24px;
+        color: var(--text-main);
+        cursor: pointer;
+        line-height: 1;
+    }
+
+    .modal-body {
+        overflow-y: auto;
+        flex-grow: 1;
+    }
+
+    /* Список слов */
+    #guessed-words-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+    #guessed-words-list li {
+        padding: 8px 0;
+        border-bottom: 1px solid var(--header-border);
+        font-size: 1.1rem;
+        text-transform: uppercase;
+        display: flex;
+        justify-content: space-between;
+    }
+    #guessed-words-list li:last-child { border-bottom: none; }
+    .word-count { font-weight: bold; color: var(--tile-correct); }
+
+    /* Кнопки в модалке */
+    .danger-btn {
+        background-color: #e74c3c;
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 4px;
+        font-weight: bold;
+        cursor: pointer;
+        width: 100%;
+        margin-top: 10px;
+        font-family: inherit;
+    }
+    .danger-btn:active { transform: scale(0.98); }
+
+    .empty-msg { text-align: center; color: var(--tile-absent); margin-top: 20px; }
+
+    /* --- СООБЩЕНИЯ --- */
+    #message-container {
+        position: absolute;
+        top: 8%;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 100;
+        pointer-events: none;
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        width: 90%;
+        align-items: center;
+    }
+
+    .message {
+        background-color: var(--text-main);
+        color: var(--bg-color);
+        padding: 10px 20px;
+        border-radius: 4px;
+        font-weight: 700;
+        font-size: 14px;
+        opacity: 0;
+        transition: opacity 0.3s;
+        text-align: center;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    }
+    .message.show { opacity: 1; }
+
+    /* --- ДОСКА --- */
+    #board-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-grow: 1;
+        width: 100%;
+        overflow: hidden;
+        padding: 10px;
+    }
+
+    #board {
+        display: grid;
+        grid-template-rows: repeat(6, 1fr);
+        grid-gap: 5px;
+        width: 100%;
+        max-width: 350px;
+        aspect-ratio: 5 / 6; 
+        max-height: calc(100dvh - var(--header-height) - 220px); 
+    }
+
+    .row {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        grid-gap: 5px;
+    }
+
+    .tile {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: clamp(1.5rem, 4vh, 2rem); 
+        font-weight: 800;
+        text-transform: uppercase;
+        border: 2px solid var(--tile-border);
+        color: var(--tile-text-filled);
+        border-radius: 4px;
+        user-select: none;
+    }
+
+    .tile[data-state="filled"] {
+        border-color: var(--tile-filled-border);
+        animation: pop 0.1s;
+    }
+
+    .tile[data-state="correct"] { background-color: var(--tile-correct) !important; border-color: var(--tile-correct) !important; color: white !important; }
+    .tile[data-state="present"] { background-color: var(--tile-present) !important; border-color: var(--tile-present) !important; color: white !important; }
+    .tile[data-state="absent"] { background-color: var(--tile-absent) !important; border-color: var(--tile-absent) !important; color: white !important; }
+
+    .tile.flip { animation: flip 0.6s ease forwards; }
+    .row.shake { animation: shake 0.5s; }
+
+    @keyframes pop { 50% { transform: scale(1.1); } }
+    @keyframes flip {
+        0% { transform: rotateX(0); }
+        50% { transform: rotateX(90deg); }
+        100% { transform: rotateX(0); }
+    }
+    @keyframes shake {
+        0%, 100% { transform: translateX(0); }
+        10%, 30%, 50%, 70%, 90% { transform: translateX(-4px); }
+        20%, 40%, 60%, 80% { transform: translateX(4px); }
+    }
+
+    /* --- КЛАВИАТУРА --- */
+    #keyboard {
+        width: 100%;
+        max-width: 500px;
+        padding: 0 8px 10px 8px;
+        flex-shrink: 0;
+    }
+
+    .keyboard-row {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 6px;
+        width: 100%;
+        gap: 4px;
+    }
+
+    .key {
+        font-family: inherit;
+        font-weight: bold;
+        border: 0;
+        height: 54px;
+        border-radius: 4px;
+        cursor: pointer;
+        background-color: var(--key-bg);
+        color: var(--key-text);
+        flex: 1; 
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-transform: uppercase;
+        font-size: 14px;
+        touch-action: manipulation;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    .key.large { flex: 1.5; font-size: 12px; }
+
+    .key[data-state="correct"] { background-color: var(--tile-correct); color: white; }
+    .key[data-state="present"] { background-color: var(--tile-present); color: white; }
+    .key[data-state="absent"] { background-color: var(--tile-absent); color: white; }
+
+    button { outline: none; }
+
+    @media (max-width: 400px) {
+        .keyboard-row { gap: 2px; margin-bottom: 4px; }
+        #keyboard { padding: 0 2px 5px 2px; }
+        .key { height: 50px; font-size: 14px; }
+    }
+    @media (max-height: 600px) {
+        :root { --header-height: 40px; }
+        #board { max-height: calc(100dvh - 200px); }
+        .key { height: 40px; }
+    }
+	.modal-actions {
+        display: flex;
+        gap: 10px;
+        margin-top: 20px;
+    }
+
+    .secondary-btn {
+        background-color: var(--key-bg); /* Используем цвет клавиш для нейтральной кнопки */
+        color: var(--text-main);
+        border: none;
+        padding: 10px 15px;
+        border-radius: 4px;
+        font-weight: bold;
+        cursor: pointer;
+        width: 100%;
+        font-family: inherit;
+        transition: opacity 0.2s;
+    }
+    
+    .secondary-btn:hover {
+        opacity: 0.8;
+    }
+    
+    /* Небольшая правка для danger-btn, чтобы убрать margin-top, 
+       так как теперь отступ задает родитель .modal-actions */
+    .modal-actions .danger-btn {
+        margin-top: 0;
+    }
+</style>
+</head>
+<body>
+
+    <header>
+        <div class="header-left">
+            <button class="icon-btn" onclick="openStats()" title="Статистика">🏆</button>
+            <button class="icon-btn" onclick="openSettings()" title="Настройки">⚙️</button>
+        </div>
+        
+        <h1>СЛОВОДЕЛ</h1>
+        
+        <div class="header-right">
+            <button class="hint-btn" onclick="useHint()" title="Подсказка">💡</button>
+            <button class="icon-btn restart-btn" onclick="startNewGame()" title="Новая игра">↻</button>
+            <button class="icon-btn theme-btn" onclick="toggleTheme()" title="Сменить тему">
+                <span id="theme-icon">🌙</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Модальное окно Статистики -->
+    <div id="stats-modal-overlay" class="modal-overlay" onclick="closeModal(event, 'stats-modal-overlay')">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>Угаданные слова</h2>
+                <button class="close-modal" onclick="closeModal(null, 'stats-modal-overlay')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <ul id="guessed-words-list">
+                    <!-- Список будет здесь -->
+                </ul>
+                <div id="empty-stats-msg" class="empty-msg">Вы пока не угадали ни одного слова.</div>
+            </div>
+        </div>
+    </div>
+	<!-- Модальное окно Подтверждения -->
+    <div id="confirm-modal-overlay" class="modal-overlay" onclick="closeModal(event, 'confirm-modal-overlay')">
+        <div class="modal" style="max-width: 350px;">
+            <div class="modal-header">
+                <h2>Подтверждение</h2>
+                <button class="close-modal" onclick="closeModal(null, 'confirm-modal-overlay')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Вы уверены, что хотите удалить всю историю побед? Это действие нельзя отменить.</p>
+                
+                <div class="modal-actions">
+                    <button class="secondary-btn" onclick="closeModal(null, 'confirm-modal-overlay')">Отмена</button>
+                    <button class="danger-btn" onclick="performClearStats()">Удалить</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно Настроек -->
+    <div id="settings-modal-overlay" class="modal-overlay" onclick="closeModal(event, 'settings-modal-overlay')">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>Настройки</h2>
+                <button class="close-modal" onclick="closeModal(null, 'settings-modal-overlay')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Здесь можно сбросить прогресс игры.</p>
+                <button class="danger-btn" onclick="askToClearStats()">Очистить статистику</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="message-container"></div>
+
+    <div id="board-container">
+        <div id="board"></div>
+    </div>
+
+    <div id="keyboard"></div>
+
+<script>
+        // --- КОНСТАНТЫ И НАСТРОЙКИ ---
+        const DATA_URL = 'slovodel_words.json';
+        const WORD_LENGTH = 5;
+        const KEYBOARD_LAYOUT = [
+            "йцукенгшщзхъ",
+            "фывапролджэё",
+            "ячсмитьбю"
+        ];
+
+        // --- ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ ---
+        let allWordsSet = new Set(); 
+        let secretWords = [];        
+        
+        let targetWord = "";
+        let guesses = [];
+        let currentRow = 0;
+        let isGameOver = false;
+        let isAnimating = false;
+        let isDataLoaded = false;
+        
+        // Флаг: использовалась ли подсказка в текущей партии
+        let hasUsedHint = false;
+        
+        // Объект статистики
+        let gameStats = {
+            guessedWords: [] // Хранит объекты: { word: "СЛОВО", usedHint: boolean }
+        };
+
+        // --- DOM ЭЛЕМЕНТЫ ---
+        const board = document.getElementById("board");
+        const keyboard = document.getElementById("keyboard");
+        const messageContainer = document.getElementById("message-container");
+
+        // --- ИНИЦИАЛИЗАЦИЯ ---
+        async function init() {
+            initTheme();
+            loadStats();
+            
+            try {
+                const response = await fetch(DATA_URL);
+                if (!response.ok) throw new Error("Не удалось загрузить словарь");
+                
+                const data = await response.json();
+
+                data.forEach(item => {
+                    if (item.word && item.word.length === WORD_LENGTH) {
+                        allWordsSet.add(item.word);
+                        if (item.secret) {
+                            secretWords.push(item.word);
+                        }
+                    }
+                });
+
+                isDataLoaded = true;
+                createBoard();
+                createKeyboard();
+                startNewGame(true);
+
+            } catch (error) {
+                console.error(error);
+                board.innerHTML = "<div style='text-align:center; padding:20px;'>Ошибка загрузки словаря.</div>";
+            }
+        }
+
+        // --- ТЕМА ОФОРМЛЕНИЯ ---
+        function initTheme() {
+            const savedTheme = localStorage.getItem('theme');
+            const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+            
+            if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+                document.body.classList.add('dark-mode');
+                document.getElementById('theme-icon').textContent = '☀️';
+            } else {
+                document.getElementById('theme-icon').textContent = '🌙';
+            }
+        }
+
+        function toggleTheme() {
+            const body = document.body;
+            body.classList.toggle('dark-mode');
+            const icon = document.getElementById('theme-icon');
+            
+            if (body.classList.contains('dark-mode')) {
+                icon.textContent = '☀️';
+                localStorage.setItem('theme', 'dark');
+            } else {
+                icon.textContent = '🌙';
+                localStorage.setItem('theme', 'light');
+            }
+        }
+
+        // --- СТАТИСТИКА ---
+        function loadStats() {
+            const savedStats = localStorage.getItem('slovodel_stats');
+            if (savedStats) {
+                try {
+                    gameStats = JSON.parse(savedStats);
+                    if (!gameStats.guessedWords) gameStats.guessedWords = [];
+                } catch (e) {
+                    console.error("Ошибка чтения статистики", e);
+                    gameStats.guessedWords = [];
+                }
+            }
+        }
+
+        function saveWin(word) {
+            const winData = {
+                word: word,
+                usedHint: hasUsedHint
+            };
+            gameStats.guessedWords.unshift(winData);
+            localStorage.setItem('slovodel_stats', JSON.stringify(gameStats));
+        }
+
+        function askToClearStats() {
+            document.getElementById('settings-modal-overlay').classList.remove('open');
+            document.getElementById('confirm-modal-overlay').classList.add('open');
+        }
+
+        function performClearStats() {
+            gameStats.guessedWords = [];
+            localStorage.removeItem('slovodel_stats');
+            showMessage("Статистика очищена");
+            document.getElementById('confirm-modal-overlay').classList.remove('open');
+        }
+
+        // --- МОДАЛЬНЫЕ ОКНА ---
+        function openStats() {
+            const list = document.getElementById('guessed-words-list');
+            const emptyMsg = document.getElementById('empty-stats-msg');
+            list.innerHTML = '';
+
+            if (gameStats.guessedWords.length === 0) {
+                emptyMsg.style.display = 'block';
+            } else {
+                emptyMsg.style.display = 'none';
+                
+                gameStats.guessedWords.forEach((item, index) => {
+                    const li = document.createElement('li');
+                    const count = gameStats.guessedWords.length - index;
+                    
+                    // Логика иконки: Лампочка если была подсказка, Кубок если честно
+                    const iconDisplay = item.usedHint ? "💡" : "🏆";
+                    const titleText = item.usedHint ? "С подсказкой" : "Честная победа";
+
+                    li.innerHTML = `
+                        <span>${item.word}</span> 
+                        <div style="display: flex; align-items: center;">
+                            <span class="word-count">#${count}</span>
+                            <span style="margin-left: 8px; font-size: 0.8em; cursor: help;" title="${titleText}">${iconDisplay}</span>
+                        </div>
+                    `;
+                    list.appendChild(li);
+                });
+            }
+            document.getElementById('stats-modal-overlay').classList.add('open');
+        }
+
+        function openSettings() {
+            document.getElementById('settings-modal-overlay').classList.add('open');
+        }
+
+        function closeModal(event, id) {
+            if (!event || event.target.id === id) {
+                document.getElementById(id).classList.remove('open');
+            }
+        }
+
+        // --- ИГРОВОЙ ПРОЦЕСС ---
+        function startNewGame(isFirstLoad = false) {
+            if (!isDataLoaded) return;
+
+            hasUsedHint = false; // Сброс флага подсказки
+            currentRow = 0;
+            guesses = [[], [], [], [], [], []];
+            isGameOver = false;
+            isAnimating = false;
+            
+            if (secretWords.length > 0) {
+                targetWord = secretWords[Math.floor(Math.random() * secretWords.length)];
+                console.log("Загадано:", targetWord); 
+            } else {
+                alert("Ошибка: нет секретных слов!");
+            }
+
+            // Очистка UI
+            document.querySelectorAll(".tile").forEach(tile => {
+                tile.textContent = "";
+                tile.className = "tile";
+                tile.removeAttribute("data-state");
+            });
+
+            document.querySelectorAll(".key").forEach(key => {
+                key.removeAttribute("data-state");
+            });
+
+            messageContainer.innerHTML = "";
+        }
+
+        function createBoard() {
+            board.innerHTML = "";
+            for (let i = 0; i < 6; i++) {
+                const row = document.createElement("div");
+                row.className = "row";
+                for (let j = 0; j < 5; j++) {
+                    const tile = document.createElement("div");
+                    tile.className = "tile";
+                    row.appendChild(tile);
+                }
+                board.appendChild(row);
+            }
+        }
+
+        function createKeyboard() {
+            keyboard.innerHTML = '';
+            KEYBOARD_LAYOUT.forEach((rowString, index) => {
+                const rowDiv = document.createElement("div");
+                rowDiv.className = "keyboard-row";
+
+                if (index === 2) {
+                    const enterKey = createKey("Enter", "large");
+                    enterKey.textContent = "ВВОД";
+                    enterKey.onclick = submitGuess;
+                    rowDiv.appendChild(enterKey);
+                }
+
+                rowString.split("").forEach(char => {
+                    const key = createKey(char);
+                    key.onclick = () => handlePress(char);
+                    rowDiv.appendChild(key);
+                });
+
+                if (index === 2) {
+                    const backKey = createKey("Backspace", "large");
+                    backKey.innerHTML = "⌫";
+                    backKey.onclick = deleteLetter;
+                    rowDiv.appendChild(backKey);
+                }
+                keyboard.appendChild(rowDiv);
+            });
+        }
+
+        function createKey(char, extraClass = "") {
+            const button = document.createElement("button");
+            button.textContent = char;
+            button.className = `key ${extraClass}`;
+            button.setAttribute("data-key", char);
+            return button;
+        }
+
+        // --- ОБРАБОТКА ВВОДА ---
+        function handlePress(key) {
+            if (isGameOver || isAnimating || !isDataLoaded) return;
+            if (document.querySelector('.modal-overlay.open')) return;
+
+            const currentGuess = guesses[currentRow];
+            
+            if (currentGuess.length < WORD_LENGTH) {
+                currentGuess.push(key);
+                updateGrid();
+                if (currentGuess.length === WORD_LENGTH) {
+                    setTimeout(submitGuess, 100); 
+                }
+            }
+        }
+
+        function deleteLetter() {
+            if (isGameOver || isAnimating) return;
+            if (document.querySelector('.modal-overlay.open')) return;
+
+            const currentGuess = guesses[currentRow];
+            currentGuess.pop();
+            updateGrid();
+        }
+
+        function useHint() {
+            if (isGameOver || isAnimating || !isDataLoaded) return;
+            if (document.querySelector('.modal-overlay.open')) return;
+
+            hasUsedHint = true; // Фиксируем использование
+
+            const currentGuessArr = guesses[currentRow];
+            let hintIndex = -1;
+            
+            for (let i = 0; i < WORD_LENGTH; i++) {
+                if (!currentGuessArr[i] || currentGuessArr[i] !== targetWord[i]) {
+                    hintIndex = i;
+                    break;
+                }
+            }
+            
+            if (hintIndex !== -1) {
+                currentGuessArr[hintIndex] = targetWord[hintIndex];
+                guesses[currentRow] = currentGuessArr.slice(0, hintIndex + 1);
+                updateGrid();
+                if (guesses[currentRow].length === WORD_LENGTH) {
+                    setTimeout(submitGuess, 100);
+                }
+            } 
+        }
+
+        function submitGuess() {
+            if (isGameOver || isAnimating) return;
+            if (document.querySelector('.modal-overlay.open')) return;
+
+            const currentGuessArr = guesses[currentRow];
+            const currentWord = currentGuessArr.join("");
+
+            if (currentGuessArr.length !== WORD_LENGTH) {
+                showMessage("Мало букв");
+                shakeRow();
+                return;
+            }
+
+            if (!allWordsSet.has(currentWord)) {
+                showMessage("Такого слова нет");
+                shakeRow();
+                return;
+            }
+
+            flipTiles(currentWord);
+        }
+
+        function updateGrid() {
+            const row = board.children[currentRow];
+            const currentGuess = guesses[currentRow];
+            for (let i = 0; i < WORD_LENGTH; i++) {
+                const tile = row.children[i];
+                const letter = currentGuess[i];
+                tile.textContent = letter || "";
+                tile.removeAttribute("data-state");
+                if (letter) {
+                    tile.setAttribute("data-state", "filled");
+                }
+            }
+        }
+
+        function shakeRow() {
+            const row = board.children[currentRow];
+            row.classList.remove("shake");
+            void row.offsetWidth;
+            row.classList.add("shake");
+        }
+
+        // --- АНИМАЦИЯ И ПРОВЕРКА ---
+        function flipTiles(guess) {
+            isAnimating = true;
+            const row = board.children[currentRow];
+            const targetLetters = targetWord.split("");
+            const guessLetters = guess.split("");
+            const states = Array(5).fill("absent");
+
+            // 1. Поиск точных совпадений (зеленые)
+            guessLetters.forEach((letter, i) => {
+                if (targetLetters[i] === letter) {
+                    states[i] = "correct";
+                    targetLetters[i] = null;
+                }
+            });
+
+            // 2. Поиск частичных совпадений (желтые)
+            guessLetters.forEach((letter, i) => {
+                if (states[i] === "correct") return;
+                const indexInTarget = targetLetters.indexOf(letter);
+                if (indexInTarget !== -1) {
+                    states[i] = "present";
+                    targetLetters[indexInTarget] = null;
+                }
+            });
+
+            // 3. Анимация переворота
+            guessLetters.forEach((letter, i) => {
+                const tile = row.children[i];
+                setTimeout(() => {
+                    tile.classList.add("flip");
+                    tile.setAttribute("data-state", states[i]);
+                    updateKeyboardColor(letter, states[i]);
+                }, i * 250);
+            });
+
+            // 4. Завершение хода
+            setTimeout(() => {
+                isAnimating = false;
+                if (guess === targetWord) {
+                    showMessage("Победа! 🏆", 2500);
+                    isGameOver = true;
+                    saveWin(targetWord);
+                    setTimeout(startNewGame, 3000); 
+                } else if (currentRow === 5) {
+                    showMessage(`Вы проиграли. Слово: ${targetWord.toUpperCase()}`, -1);
+                    isGameOver = true;
+                } else {
+                    currentRow++;
+                }
+            }, WORD_LENGTH * 250 + 100);
+        }
+
+        function updateKeyboardColor(letter, state) {
+            const key = document.querySelector(`.key[data-key="${letter}"]`);
+            if (!key) return;
+            const currentState = key.getAttribute("data-state");
+            
+            if (state === "correct") {
+                key.setAttribute("data-state", "correct");
+            } else if (state === "present" && currentState !== "correct") {
+                key.setAttribute("data-state", "present");
+            } else if (state === "absent" && currentState !== "correct" && currentState !== "present") {
+                key.setAttribute("data-state", "absent");
+            }
+        }
+
+        function showMessage(text, duration = 2000) {
+            const msg = document.createElement("div");
+            msg.textContent = text;
+            msg.className = "message show";
+            messageContainer.prepend(msg);
+            if (duration > 0) {
+                setTimeout(() => {
+                    msg.classList.remove("show");
+                    setTimeout(() => msg.remove(), 300);
+                }, duration);
+            }
+        }
+
+        // --- СЛУШАТЕЛИ СОБЫТИЙ ---
+        document.addEventListener("keydown", (e) => {
+            if (isGameOver || isAnimating || !isDataLoaded) return;
+            
+            // Закрытие модалок по Esc
+            if (document.querySelector('.modal-overlay.open')) {
+                if (e.key === "Escape") {
+                    document.querySelectorAll('.modal-overlay').forEach(el => el.classList.remove('open'));
+                }
+                return;
+            }
+
+            const key = e.key.toLowerCase();
+            if (key === "enter") { submitGuess(); return; }
+            if (key === "backspace") { deleteLetter(); return; }
+            if (/^[а-яё]$/.test(key)) { handlePress(key); }
+        });
+
+        // Запуск
+        init();
+    </script>
+</body>
+</html>
